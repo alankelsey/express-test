@@ -1,0 +1,17 @@
+extends layout
+block content
+    html
+        head
+        body
+        p #{date}
+            div
+            p test #{testTime}
+            p Started at: #{startTime}
+            form(method="POST")
+                button.col-sm-3.btn.btn-primary(type="submit" title="start" role='button' href='http://localhost:3000/timer/stopTimer') Stop
+                button.col-sm-3.btn.btn-primary(type="submit" title="start" role='button' href='http://localhost:3000/timer') Reset
+        div(name='id', value=startTimeAct)
+        
+        footer
+    
+    

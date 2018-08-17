@@ -1,0 +1,16 @@
+extends layout
+block content
+    html
+        head
+        body
+        p #{date}
+            div
+            p Started at: #{startTime} 
+            p Stopped at: #{stopTime}
+            p time spent: #{total}
+            button.col-sm-3.btn.btn-primary (type="submit" title="start" role='button' href='http://localhost:3000/timer') Reset
+        div
+        
+        footer
+    
+    
