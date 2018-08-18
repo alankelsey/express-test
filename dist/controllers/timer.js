@@ -20,7 +20,8 @@ class MyTimer {
         return today;
     }
     elapsedTime(startedAt, stoppedAt) {
-        const totalTime = this.stopTime - this.startTime;
+        const diff = stoppedAt - startedAt;
+        const totalTime = diff / 1000;
         return totalTime;
     }
 }
@@ -28,39 +29,38 @@ const timerData = new MyTimer;
 const startTimerData = new MyTimer;
 const stopTimerData = new MyTimer;
 exports.getTimer = (req, res) => {
-    const baseUrl = "http://localhost:3000/timer/startTimer";
-    const timeNow = Date.now();
-    const fullUrl = "baseUrl + timenow";
+    // const baseUrl = "http://localhost:3000/timer?start=";
+    // const timeNow = Date.now();
+    // const fullUrl = "baseUrl" + Date.now();
     res.render("timer", {
         date: timerData.getDate(),
-        startTime: timeNow,
-        link: fullUrl
+        startTime: 0,
+        endTime: 0,
+        total: 0,
+        title: "Timer"
     });
 };
 exports.startTimer = (req, res) => {
-    // next: NextFunction
-    const testTime = req.params.startTime;
-    startTimerData.setStartTime();
-    res.render("starttimer", {
-        date: startTimerData.getDate(),
+    // const delta = req.params.startTime;
+    // startTimerData.setStartTime();
+    res.render("timer", {
+        "date": startTimerData.getDate(),
         startTime: Date.now(),
-        try: testTime
+        endTime: 0,
+        total: 0,
+        title: "Timer"
     });
 };
 exports.stopTimer = (req, res) => {
-    const start = req.params.startTime;
-    stopTimerData.setStopTime();
-    if (stopTimerData.startTime > 1) {
-        this.timeSpent = timerData.elapsedTime(startTimerData.startTime, stopTimerData.stopTime);
-    }
-    else {
-        this.timeSpent = "error";
-    }
-    res.render("stoptimer", {
+    const started = req.body.start;
+    // console.log(req.body.start);
+    // console.log(Date.now());
+    res.render("timer", {
         date: timerData.getDate(),
-        stopTime: startTimerData.stopTime,
-        startTime: stopTimerData.startTime,
-        total: this.timeSpent
+        endTime: Date.now(),
+        startTime: started,
+        total: startTimerData.elapsedTime(started, Date.now()),
+        title: "Timer"
     });
 };
 /* export let startTimer = (req: Request, res: Response) => {

@@ -3,11 +3,39 @@ block content
     html
         head
         body
+        - var s = startTime
         p #{siteDate}
+        div Started at: #{startTime}
+        div Stopped at: #{endTime}
+        div Total time #{total}
         div
-            form(method="POST")
-                button.col-sm-3.btn.btn-primary(type="submit"  role='button' href='#{link}') Start
-                button.col-sm-3.btn.btn-primary(type="submit"  role='button' href='http://localhost:3000/timer') Reset
+            if startTime == 0
+                div
+                    form(method="POST", action='/timer/start/')
+                        input( type="hidden", name="start", value=startTime)
+                        input( type="hidden", name="stop", value=endTime)
+                        label(for="start timer")
+                        button.col-sm-3.btn.btn-primary(type="submit") Start
+                    br
+                    form(method="GET", action='/timer/')
+                        button.col-sm-3.btn.btn-primary(type="submit") Reset
+            else if endTime == 0
+                div
+                    form(method="POST", action='/timer/stop/')
+                        input( type="hidden",name="start", value=startTime)
+                        input( type="hidden", name="stop", value=endTime)
+                        label(for="start timer")
+                        button.col-sm-3.btn.btn-primary(type="submit", value=startTime) Stop
+                    br
+                    form(method="GET", action='/timer/')
+                        button.col-sm-3.btn.btn-primary(type="submit") Reset
+            else
+                
+                div
+                    form(method="GET", action='/timer/')
+                        button.col-sm-3.btn.btn-primary(type="submit") Reset
         div
-        
+
+        div
+            
         footer

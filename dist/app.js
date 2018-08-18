@@ -109,7 +109,8 @@ app.post("/account/password", passportConfig.isAuthenticated, userController.pos
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get("/timer", timerController.getTimer);
-app.post("/timer", timerController.startTimer);
+app.post("/timer/start/", timerController.startTimer);
+app.post("/timer/stop/", timerController.stopTimer);
 // app.post("/timer/startTimer/:startTimeAct", timerController.startTimer);
 // app.get("/timer/startTimer/:startTimeAct", timerController.startTimer);
 // app.get("/timer/startTimer/:startTimeAct", function(req, res) {start: req.params.startTimeAct});
