@@ -34,8 +34,8 @@ class MyTimer {
 }
 
 const timerData = new MyTimer;
-const startTimerData = new MyTimer;
-const stopTimerData = new MyTimer;
+// const startTimerData = new MyTimer;
+// const stopTimerData = new MyTimer;
 
 export let getTimer = (req: Request, res: Response) => {
     // const baseUrl = "http://localhost:3000/timer?start=";
@@ -54,7 +54,8 @@ export let startTimer = (req: Request, res: Response) => {
     // const delta = req.params.startTime;
     // startTimerData.setStartTime();
     res.render("timer", {
-        "date": startTimerData.getDate(),
+        // "date": startTimerData.getDate(),
+        "date": timerData.getDate(),
         startTime: Date.now(),
         endTime: 0,
         total: 0,
@@ -70,7 +71,8 @@ export let stopTimer = (req: Request, res: Response) => {
         date: timerData.getDate(),
         endTime: Date.now(),
         startTime: started,
-        total: startTimerData.elapsedTime(started, Date.now()),
+        // total: startTimerData.elapsedTime(started, Date.now()),
+        total: timerData.elapsedTime(started, Date.now()),
         title: "Timer"
     });
 };
