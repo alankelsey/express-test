@@ -33,7 +33,7 @@ class Time {
     setStopTime() {
         this.timerData.endTime = this.getTime();
         this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
-       
+
     }
 
     private getTime() {

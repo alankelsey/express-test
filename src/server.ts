@@ -1,7 +1,7 @@
 import errorHandler from "errorhandler";
 
 import app from "./app";
-const reload = require("reload");
+
 
 /**
  * Error Handler. Provides full stack - remove for production
@@ -19,5 +19,5 @@ const server = app.listen(app.get("port"), () => {
   );
   console.log("  Press CTRL-C to stop\n");
 });
-reload(server, app);
+
 export default server;

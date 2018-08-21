@@ -46,7 +46,7 @@ class MyTimer {
     private formatMinSec(ms: number) {
 
         const sec = (ms / 1000);
-        const totalSec = sec;
+        // const totalSec = sec;
         const min = (ms / 60000);
 
         const results = {
