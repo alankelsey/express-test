@@ -3,11 +3,10 @@ block content
     html
         head
         body
-        - var s = startTime
-        p #{siteDate}
         div Started at: #{startTime}
         div Stopped at: #{endTime}
-        div Total time #{total}
+        div Min:  #{min}
+        div Sec:  #{sec}
         div
             if startTime == 0
                 div
