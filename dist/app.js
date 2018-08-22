@@ -32,6 +32,7 @@ const homeController = __importStar(require("./controllers/home"));
 const userController = __importStar(require("./controllers/user"));
 const contactController = __importStar(require("./controllers/contact"));
 const timerController = __importStar(require("./controllers/timer"));
+const groupController = __importStar(require("./controllers/group"));
 // API keys and Passport configuration
 const passportConfig = __importStar(require("./config/passport"));
 // Create Express server
@@ -86,8 +87,9 @@ app.use((req, res, next) => {
 });
 app.use(express_1.default.static(path_1.default.join(__dirname, "public"), { maxAge: 31557600000 }));
 app.locals.siteDate = new Date();
-app.locals.startTime = 0;
-app.locals.stopTime = 0;
+app.locals.siteYear = new Date().getFullYear();
+// app.locals.startTime = 0;
+// app.locals.stopTime = 0;
 /**
  * Primary app routes.
  */
@@ -111,13 +113,7 @@ app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userControl
 app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
-// app.post("/timer/startTimer/:startTimeAct", timerController.startTimer);
-// app.get("/timer/startTimer/:startTimeAct", timerController.startTimer);
-// app.get("/timer/startTimer/:startTimeAct", function(req, res) {start: req.params.startTimeAct});
-// app.get("/timer/stopTimer/:stopTime", timerController.stopTimer {start: req.params.startTime});
-// app.get("/timer/:totalTime", function (req, res) { res.send(req.params); });
-// Access userId via: req.params.userId
-// Access bookId via: req.params.bookId
+app.post("/group", groupController.getGroup);
 /**
  * API examples routes.
  */

@@ -19,6 +19,8 @@
           a(href='/api') API Examples
         li(class=(title == 'Timer') ? 'active' : undefined)
           a(href='/timer') Timer
+      ul.nav.navbar-nav
+        li(class=(title == 'Home') ? 'active' : undefined)
       ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)

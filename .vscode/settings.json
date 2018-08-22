@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        "node_modules{,/**}"
+    ],
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/35c18b2f-bdcf-4917-8a02-8870a6be93b5/resourceGroups/appsvc_rg_linux_westus/providers/Microsoft.Web/sites/expressjstimer"
+}

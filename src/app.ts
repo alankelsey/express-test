@@ -26,6 +26,7 @@ import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 import * as timerController from "./controllers/timer";
+import * as groupController from "./controllers/group";
 
 
 // API keys and Passport configuration
@@ -90,8 +91,9 @@ app.use(
 );
 
 app.locals.siteDate = new Date();
-app.locals.startTime = 0;
-app.locals.stopTime = 0;
+app.locals.siteYear = new Date().getFullYear();
+// app.locals.startTime = 0;
+// app.locals.stopTime = 0;
 /**
  * Primary app routes.
  */
@@ -115,13 +117,8 @@ app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userControl
 app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
-// app.post("/timer/startTimer/:startTimeAct", timerController.startTimer);
-// app.get("/timer/startTimer/:startTimeAct", timerController.startTimer);
-// app.get("/timer/startTimer/:startTimeAct", function(req, res) {start: req.params.startTimeAct});
-// app.get("/timer/stopTimer/:stopTime", timerController.stopTimer {start: req.params.startTime});
-// app.get("/timer/:totalTime", function (req, res) { res.send(req.params); });
-  // Access userId via: req.params.userId
-  // Access bookId via: req.params.bookId
+app.post("/group", groupController.getGroup);
+
 /**
  * API examples routes.
  */

@@ -5,65 +5,77 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Timer page.
  */
 class MyTimer {
+    constructor() {
+        /*
+        timerData: object;
+        constructor() {
+            this.timerData = {
+                startTime: 0,
+                endTime: 0,
+                min: 0,
+                sec: 0
+            }
+        }
+        */
+        this.timerData = {
+            startTime: 0,
+            endTime: 0,
+            min: 0,
+            sec: 0
+        };
+    }
     setStartTime() {
-        this.startTime = Date.now();
+        this.timerData.startTime = this.getTime();
     }
     setStopTime() {
-        this.stopTime = Date.now();
+        this.timerData.endTime = this.getTime();
+        this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
     }
     getTime() {
-        const time = Date.now();
-        return time;
+        return Date.now();
     }
-    getDate() {
-        const today = new Date();
-        return today;
+    returnTimerData() {
+        return this.timerData;
     }
     elapsedTime(startedAt, stoppedAt) {
         const diff = stoppedAt - startedAt;
-        const totalTime = diff / 1000;
-        return totalTime;
+        // const totalTime = this.formatMinSec(diff).seconds;
+        this.timerData.min = this.formatMinSec(diff).minutes;
+        this.timerData.sec = this.formatMinSec(diff).seconds;
+    }
+    formatMinSec(ms) {
+        const sec = (ms / 1000) % 60;
+        // const secCalc = (ms / 1000) % 60;
+        const min = ((ms / 1000) - ((ms / 1000) % 60)) / 60;
+        // const sec = Math.trunc(secCalc * Math.pow(10, 3)) / 100;
+        const results = { seconds: sec, minutes: 0 };
+        if (min < 1) {
+            results.minutes = 0;
+        }
+        else {
+            results.minutes = min;
+        }
+        return results;
+    }
+    resetTimer() {
+        this.timerData.startTime = 0;
+        this.timerData.endTime = 0;
+        this.timerData.min = 0;
+        this.timerData.sec = 0;
     }
 }
-const timerData = new MyTimer;
-const startTimerData = new MyTimer;
-const stopTimerData = new MyTimer;
+const timer = new MyTimer;
 exports.getTimer = (req, res) => {
-    // const baseUrl = "http://localhost:3000/timer?start=";
-    // const timeNow = Date.now();
-    // const fullUrl = "baseUrl" + Date.now();
-    res.render("timer", {
-        date: timerData.getDate(),
-        startTime: 0,
-        endTime: 0,
-        total: 0,
-        title: "Timer"
-    });
+    timer.resetTimer();
+    res.render("timer", timer.returnTimerData());
 };
 exports.startTimer = (req, res) => {
-    // const delta = req.params.startTime;
-    // startTimerData.setStartTime();
-    res.render("timer", {
-        "date": startTimerData.getDate(),
-        startTime: Date.now(),
-        endTime: 0,
-        total: 0,
-        title: "Timer"
-    });
+    timer.setStartTime();
+    res.render("timer", timer.returnTimerData());
 };
 exports.stopTimer = (req, res) => {
-    const started = req.body.start;
-    // console.log(req.body.start);
-    // console.log(Date.now());
-    res.render("timer", {
-        date: timerData.getDate(),
-        endTime: Date.now(),
-        startTime: started,
-        total: startTimerData.elapsedTime(started, Date.now()),
-        title: "Timer"
-    });
+    timer.setStopTime();
+    res.render("timer", timer.returnTimerData());
 };
-/* export let startTimer = (req: Request, res: Response) => {
-    res.send("<p>start Time: " + timer.startTime + "</p>");
-}; */
+exports.t = timer;
 //# sourceMappingURL=timer.js.map

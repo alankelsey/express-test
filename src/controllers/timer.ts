@@ -6,12 +6,25 @@ import { Request, Response } from "express";
  */
 class MyTimer {
 
+    /*
+    timerData: object;
+    constructor() {
+        this.timerData = {
+            startTime: 0,
+            endTime: 0,
+            min: 0,
+            sec: 0
+        }
+    }
+    */
+
     private timerData = {
         startTime: 0,
         endTime: 0,
-        min: "",
-        sec: ""
+        min: 0,
+        sec: 0
     };
+
 
     setStartTime() {
 
@@ -45,40 +58,30 @@ class MyTimer {
 
     private formatMinSec(ms: number) {
 
-        const sec = (ms / 1000);
-        // const totalSec = sec;
-        const min = (ms / 60000);
+        const sec = (ms / 1000) % 60;
+        // const secCalc = (ms / 1000) % 60;
+        const min = ((ms / 1000) - ((ms / 1000) % 60)) / 60;
+        // const sec = Math.trunc(secCalc * Math.pow(10, 3)) / 100;
 
-        const results = {
-            seconds: sec.toFixed(),
-            minutes: "0"
-        };
+        const results = { seconds: sec, minutes: 0 };
 
         if (min < 1) {
 
-
-                results.seconds = sec.toFixed();
-                results.minutes = "0";
-
-
+            results.minutes = 0;
         } else {
 
-            results.seconds = sec.toFixed();
-            results.minutes = min.toFixed();
-
-            }
-
+            results.minutes = min;
+        }
 
         return results;
-
     }
 
     resetTimer() {
 
         this.timerData.startTime = 0;
         this.timerData.endTime = 0;
-        this.timerData.min = "";
-        this.timerData.sec = "";
+        this.timerData.min = 0;
+        this.timerData.sec = 0;
     }
 
 }
@@ -99,3 +102,5 @@ export let stopTimer = (req: Request, res: Response) => {
     timer.setStopTime();
     res.render("timer", timer.returnTimerData());
 };
+
+export let t = timer;
