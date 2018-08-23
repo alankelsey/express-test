@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * GET /
  * Timer page.
  */
+/*
+
+  starts, stops, formats dates
+*/
 class MyTimer {
     constructor() {
         /*
@@ -64,7 +68,26 @@ class MyTimer {
         this.timerData.sec = 0;
     }
 }
+class MyGroup extends MyTimer {
+    constructor() {
+        super(...arguments);
+        this.nameArry = [
+            "Greg",
+            "Dave",
+            "Alan"
+        ];
+    }
+    getName() {
+        return this.nameArry;
+    }
+}
 const timer = new MyTimer;
+const group = new MyGroup;
+exports.getGroup = (req, res) => {
+    res.send(group.getName());
+    console.log(group.getName());
+    res.render("timer", timer.returnTimerData());
+};
 exports.getTimer = (req, res) => {
     timer.resetTimer();
     res.render("timer", timer.returnTimerData());

@@ -1,8 +1,15 @@
 import { Request, Response } from "express";
+import { WriteError } from "mongodb";
+import { default as User, UserModel, AuthToken } from "../models/User";
 
 /**
  * GET /
  * Timer page.
+ */
+
+ /*
+
+   starts, stops, formats dates
  */
 class MyTimer {
 
@@ -86,7 +93,32 @@ class MyTimer {
 
 }
 
+class MyGroup extends MyTimer {
+
+    private nameArry: string[] = [
+
+        "Greg",
+        "Dave",
+        "Alan"
+    ];
+
+    getName() {
+
+        return this.nameArry;
+    }
+
+}
+
 const timer = new MyTimer;
+const group = new MyGroup;
+
+export let getGroup = (req: Request, res: Response) => {
+
+    res.send(group.getName());
+    console.log(group.getName());
+    res.render("timer", timer.returnTimerData());
+
+};
 
 export let getTimer = (req: Request, res: Response) => {
     timer.resetTimer();

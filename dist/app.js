@@ -32,7 +32,6 @@ const homeController = __importStar(require("./controllers/home"));
 const userController = __importStar(require("./controllers/user"));
 const contactController = __importStar(require("./controllers/contact"));
 const timerController = __importStar(require("./controllers/timer"));
-const groupController = __importStar(require("./controllers/group"));
 // API keys and Passport configuration
 const passportConfig = __importStar(require("./config/passport"));
 // Create Express server
@@ -113,7 +112,7 @@ app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userControl
 app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
-app.post("/group", groupController.getGroup);
+app.get("/group", timerController.getGroup);
 /**
  * API examples routes.
  */
