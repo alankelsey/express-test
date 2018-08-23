@@ -1,17 +1,72 @@
 import { Request, Response } from "express";
 import { WriteError } from "mongodb";
 import { default as User, UserModel, AuthToken } from "../models/User";
+import { each } from "../../node_modules/@types/async";
 
 /**
  * GET /
  * Timer page.
  */
 
+class MyGroup {
+
+    private groupInfo: Object;
+    constructor() {
+
+        this.groupInfo = [
+
+            {
+                "id": 1,
+                "name": "Greg",
+                "time": 0
+            },
+            {
+                "id": 2,
+                "name": "Dave",
+                "time": 0
+            },
+            {
+                "id": 3,
+                "name": "Alan",
+                "time": 0
+            }
+
+        ];
+}
+
+/*
+    private groupInfo = [
+        {
+            "id": 1,
+            "name": "Greg",
+            "time": 0
+        },
+        {
+            "id": 2,
+            "name": "Dave",
+            "time": 0
+        },
+        {
+            "id": 2,
+            "name": "Alan",
+            "time": 0
+        }
+
+    ];
+*/
+    getName() {
+        return "alan";
+        // return this.groupInfo;
+    }
+
+}
+
  /*
 
    starts, stops, formats dates
  */
-class MyTimer {
+class MyTimer extends MyGroup {
+
 
     /*
     timerData: object;
@@ -25,17 +80,24 @@ class MyTimer {
     }
     */
 
+    private nameList = this.getName();
+
     private timerData = {
         startTime: 0,
         endTime: 0,
         min: 0,
-        sec: 0
+        sec: 0,
+        name: this.nameList
     };
 
+    private nextName(listIn: object) {
+        // this.timerData.name = this.name;
+    }
 
     setStartTime() {
 
         this.timerData.startTime = this.getTime();
+        // this.nextName(this.nameList);
     }
 
     setStopTime() {
@@ -93,29 +155,12 @@ class MyTimer {
 
 }
 
-class MyGroup extends MyTimer {
-
-    private nameArry: string[] = [
-
-        "Greg",
-        "Dave",
-        "Alan"
-    ];
-
-    getName() {
-
-        return this.nameArry;
-    }
-
-}
-
 const timer = new MyTimer;
-const group = new MyGroup;
 
 export let getGroup = (req: Request, res: Response) => {
 
-    res.send(group.getName());
-    console.log(group.getName());
+    // res.send(group.getName());
+    // console.log(group.getName());
     res.render("timer", timer.returnTimerData());
 
 };

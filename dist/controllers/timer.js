@@ -4,11 +4,56 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * GET /
  * Timer page.
  */
+class MyGroup {
+    constructor() {
+        this.groupInfo = [
+            {
+                "id": 1,
+                "name": "Greg",
+                "time": 0
+            },
+            {
+                "id": 2,
+                "name": "Dave",
+                "time": 0
+            },
+            {
+                "id": 3,
+                "name": "Alan",
+                "time": 0
+            }
+        ];
+    }
+    /*
+        private groupInfo = [
+            {
+                "id": 1,
+                "name": "Greg",
+                "time": 0
+            },
+            {
+                "id": 2,
+                "name": "Dave",
+                "time": 0
+            },
+            {
+                "id": 2,
+                "name": "Alan",
+                "time": 0
+            }
+    
+        ];
+    */
+    getName() {
+        return "alan";
+        // return this.groupInfo;
+    }
+}
 /*
 
   starts, stops, formats dates
 */
-class MyTimer {
+class MyTimer extends MyGroup {
     constructor() {
         /*
         timerData: object;
@@ -21,15 +66,22 @@ class MyTimer {
             }
         }
         */
+        super(...arguments);
+        this.nameList = this.getName();
         this.timerData = {
             startTime: 0,
             endTime: 0,
             min: 0,
-            sec: 0
+            sec: 0,
+            name: this.nameList
         };
+    }
+    nextName(listIn) {
+        // this.timerData.name = this.name;
     }
     setStartTime() {
         this.timerData.startTime = this.getTime();
+        // this.nextName(this.nameList);
     }
     setStopTime() {
         this.timerData.endTime = this.getTime();
@@ -68,24 +120,10 @@ class MyTimer {
         this.timerData.sec = 0;
     }
 }
-class MyGroup extends MyTimer {
-    constructor() {
-        super(...arguments);
-        this.nameArry = [
-            "Greg",
-            "Dave",
-            "Alan"
-        ];
-    }
-    getName() {
-        return this.nameArry;
-    }
-}
 const timer = new MyTimer;
-const group = new MyGroup;
 exports.getGroup = (req, res) => {
-    res.send(group.getName());
-    console.log(group.getName());
+    // res.send(group.getName());
+    // console.log(group.getName());
     res.render("timer", timer.returnTimerData());
 };
 exports.getTimer = (req, res) => {

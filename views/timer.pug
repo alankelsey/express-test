@@ -3,6 +3,7 @@ block content
     html
         head
         body
+        div #{name}
         div Started at: #{startTime}
         div Stopped at: #{endTime}
         div Min:  #{min}
@@ -36,10 +37,6 @@ block content
         div
 
         div
-            form(method="GET", action='/group')
-                input( type="hidden",name="start", value=startTime)
-                input( type="hidden", name="stop", value=endTime)
-                label(for="start timer")
-                button.col-sm-3.btn.btn-primary(type="submit", value=startTime) Group
+            
             
         footer
