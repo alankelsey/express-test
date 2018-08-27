@@ -1,59 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const group_1 = require("../controllers/group");
+// const a = new MyGroup;
+// console.log(a.getName());
 /**
  * GET /
  * Timer page.
  */
-class MyGroup {
-    constructor() {
-        this.groupInfo = [
-            {
-                "id": 1,
-                "name": "Greg",
-                "time": 0
-            },
-            {
-                "id": 2,
-                "name": "Dave",
-                "time": 0
-            },
-            {
-                "id": 3,
-                "name": "Alan",
-                "time": 0
-            }
-        ];
-    }
-    /*
-        private groupInfo = [
-            {
-                "id": 1,
-                "name": "Greg",
-                "time": 0
-            },
-            {
-                "id": 2,
-                "name": "Dave",
-                "time": 0
-            },
-            {
-                "id": 2,
-                "name": "Alan",
-                "time": 0
-            }
-    
-        ];
-    */
-    getName() {
-        return "alan";
-        // return this.groupInfo;
-    }
-}
-/*
-
-  starts, stops, formats dates
-*/
-class MyTimer extends MyGroup {
+//  starts, stops, formats dates
+class MyTimer extends group_1.MyGroup {
     constructor() {
         /*
         timerData: object;
@@ -67,18 +22,19 @@ class MyTimer extends MyGroup {
         }
         */
         super(...arguments);
-        this.nameList = this.getName();
+        this.nameList = this.getNames();
         this.timerData = {
             startTime: 0,
             endTime: 0,
             min: 0,
             sec: 0,
-            name: this.nameList
+            name: this.nameList[0],
+            index: 0
         };
     }
-    nextName(listIn) {
-        // this.timerData.name = this.name;
-    }
+    // private nextName(listIn: object) {
+    // this.timerData.name = this.name;
+    // }
     setStartTime() {
         this.timerData.startTime = this.getTime();
         // this.nextName(this.nameList);
@@ -86,6 +42,25 @@ class MyTimer extends MyGroup {
     setStopTime() {
         this.timerData.endTime = this.getTime();
         this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
+        // this.timerData.name = this.nextName();
+    }
+    setUser(inc) {
+        this.timerData.name = this.nameList[inc];
+    }
+    nextUser(cnt) {
+        this.resetTimer();
+        const endIng = this.nameList.length - 1;
+        // this.timerData.name = private cnt = 0;
+        const inc = cnt + 1;
+        if (inc > endIng) {
+            this.timerData.name = this.nameList[0];
+            this.timerData.index = 0;
+        }
+        else {
+            this.timerData.name = this.nameList[inc];
+            this.timerData.index = inc;
+        }
+        // console.log(inc);
     }
     getTime() {
         return Date.now();
@@ -136,6 +111,10 @@ exports.startTimer = (req, res) => {
 };
 exports.stopTimer = (req, res) => {
     timer.setStopTime();
+    res.render("timer", timer.returnTimerData());
+};
+exports.next = (req, res) => {
+    timer.nextUser(timer.returnTimerData().index);
     res.render("timer", timer.returnTimerData());
 };
 exports.t = timer;

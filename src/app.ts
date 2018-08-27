@@ -117,7 +117,8 @@ app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userControl
 app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
-app.get("/group", timerController.getGroup);
+app.get("/timer/next/", timerController.next);
+// app.get("/group", timerController.getGroup);
 
 /**
  * API examples routes.

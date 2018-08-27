@@ -2,69 +2,17 @@ import { Request, Response } from "express";
 import { WriteError } from "mongodb";
 import { default as User, UserModel, AuthToken } from "../models/User";
 import { each } from "../../node_modules/@types/async";
+import { MyGroup } from "../controllers/group" ;
 
+// const a = new MyGroup;
+// console.log(a.getName());
 /**
  * GET /
  * Timer page.
  */
 
-class MyGroup {
+ //  starts, stops, formats dates
 
-    private groupInfo: Object;
-    constructor() {
-
-        this.groupInfo = [
-
-            {
-                "id": 1,
-                "name": "Greg",
-                "time": 0
-            },
-            {
-                "id": 2,
-                "name": "Dave",
-                "time": 0
-            },
-            {
-                "id": 3,
-                "name": "Alan",
-                "time": 0
-            }
-
-        ];
-}
-
-/*
-    private groupInfo = [
-        {
-            "id": 1,
-            "name": "Greg",
-            "time": 0
-        },
-        {
-            "id": 2,
-            "name": "Dave",
-            "time": 0
-        },
-        {
-            "id": 2,
-            "name": "Alan",
-            "time": 0
-        }
-
-    ];
-*/
-    getName() {
-        return "alan";
-        // return this.groupInfo;
-    }
-
-}
-
- /*
-
-   starts, stops, formats dates
- */
 class MyTimer extends MyGroup {
 
 
@@ -80,19 +28,20 @@ class MyTimer extends MyGroup {
     }
     */
 
-    private nameList = this.getName();
+    private nameList = this.getNames();
 
     private timerData = {
         startTime: 0,
         endTime: 0,
         min: 0,
         sec: 0,
-        name: this.nameList
+        name: this.nameList[0],
+        index: 0
     };
 
-    private nextName(listIn: object) {
+    // private nextName(listIn: object) {
         // this.timerData.name = this.name;
-    }
+    // }
 
     setStartTime() {
 
@@ -104,6 +53,29 @@ class MyTimer extends MyGroup {
 
         this.timerData.endTime = this.getTime();
         this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
+        // this.timerData.name = this.nextName();
+
+    }
+
+    setUser(inc: number) {
+
+        this.timerData.name = this.nameList[inc];
+    }
+
+    nextUser(cnt: number) {
+        this.resetTimer();
+        const endIng = this.nameList.length - 1;
+        // this.timerData.name = private cnt = 0;
+        const inc = cnt + 1;
+        if ( inc > endIng ) {
+            this.timerData.name = this.nameList[0];
+            this.timerData.index = 0;
+        } else {
+            this.timerData.name = this.nameList[inc];
+            this.timerData.index = inc;
+        }
+        // console.log(inc);
+
     }
 
     private getTime() {
@@ -178,6 +150,12 @@ export let startTimer = (req: Request, res: Response) => {
 export let stopTimer = (req: Request, res: Response) => {
     timer.setStopTime();
     res.render("timer", timer.returnTimerData());
+};
+
+export let next = (req: Request, res: Response) => {
+    timer.nextUser(timer.returnTimerData().index);
+    res.render("timer", timer.returnTimerData());
+
 };
 
 export let t = timer;
