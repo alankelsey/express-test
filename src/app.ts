@@ -15,6 +15,8 @@ import bluebird from "bluebird";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 
+
+
 const MongoStore = mongo(session);
 
 // Load environment variables from .env file, where API keys and passwords are configured
@@ -26,8 +28,7 @@ import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 import * as timerController from "./controllers/timer";
-import * as groupController from "./controllers/group";
-
+// import * as groupController from "./controllers/group";
 
 // API keys and Passport configuration
 import * as passportConfig from "./config/passport";
@@ -90,6 +91,9 @@ app.use(
   express.static(path.join(__dirname, "public"), { maxAge: 31557600000 })
 );
 
+app.use(express.static("app/public"));
+app.use(require("./routes/userFile"));
+
 app.locals.siteDate = new Date();
 app.locals.siteYear = new Date().getFullYear();
 // app.locals.startTime = 0;
@@ -123,7 +127,7 @@ app.get("/timer/next/", timerController.next);
 /**
  * API examples routes.
  */
-// app.get("/api", apiController.getApi);
+// app.get("/api", apiController.get);
 // app.get("/api/facebook", passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
 
 /**

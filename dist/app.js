@@ -32,6 +32,7 @@ const homeController = __importStar(require("./controllers/home"));
 const userController = __importStar(require("./controllers/user"));
 const contactController = __importStar(require("./controllers/contact"));
 const timerController = __importStar(require("./controllers/timer"));
+// import * as groupController from "./controllers/group";
 // API keys and Passport configuration
 const passportConfig = __importStar(require("./config/passport"));
 // Create Express server
@@ -85,6 +86,8 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express_1.default.static(path_1.default.join(__dirname, "public"), { maxAge: 31557600000 }));
+app.use(express_1.default.static("app/public"));
+app.use(require("./routes/userFile"));
 app.locals.siteDate = new Date();
 app.locals.siteYear = new Date().getFullYear();
 // app.locals.startTime = 0;
@@ -117,7 +120,7 @@ app.get("/timer/next/", timerController.next);
 /**
  * API examples routes.
  */
-// app.get("/api", apiController.getApi);
+// app.get("/api", apiController.get);
 // app.get("/api/facebook", passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
 /**
  * OAuth authentication routes. (Sign in)
