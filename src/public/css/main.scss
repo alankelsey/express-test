@@ -18,6 +18,19 @@ body {
   margin-bottom: 75px;
 }
 
+.results {
+  margin-left: 40%;
+  margin-top: -10%;
+}
+
+.results.p {
+  font-size: 8em;
+}
+
+.results.li {
+list-style-type: none;
+}
+
 footer {
   position: absolute;
   bottom: 0;

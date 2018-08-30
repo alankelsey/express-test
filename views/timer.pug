@@ -8,7 +8,6 @@ block content
         div Stopped at: #{endTime}
         div Min:  #{min}
         div Sec:  #{sec}
-        div
             if startTime == 0
                 div
                     form(method="POST", action='/timer/start/')
@@ -33,11 +32,15 @@ block content
                 
                 div
                     form(method="GET", action='/timer/next/')
-                            button.col-sm-3.btn.btn-primary(type="submit") Next
+                        input( type="hidden", name="total", value=min + " : " + sec)
+                        label(for="next")
+                        button.col-sm-3.btn.btn-primary(type="submit") Next
+                    br
                     form(method="GET", action='/timer/')
                         button.col-sm-3.btn.btn-primary(type="submit") Reset
+                    br
         div
-
+            include partials/group.pug
         div
             
     
