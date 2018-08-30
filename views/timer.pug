@@ -3,11 +3,13 @@ block content
     html
         head
         body
-        div #{name}
-        div Started at: #{startTime}
-        div Stopped at: #{endTime}
-        div Min:  #{min}
-        div Sec:  #{sec}
+        div(class="timerInfo") 
+            ul(class="list-unstyled")
+                li #{name}
+                li Started at: #{startTime}
+                li Stopped at: #{endTime}
+                li Min:  #{min}
+                li Sec:  #{sec}
             if startTime == 0
                 div
                     form(method="POST", action='/timer/start/')
@@ -29,7 +31,6 @@ block content
                     form(method="GET", action='/timer/')
                         button.col-sm-3.btn.btn-primary(type="submit") Reset
             else
-                
                 div
                     form(method="GET", action='/timer/next/')
                         input( type="hidden", name="total", value=min + " : " + sec)
@@ -38,12 +39,7 @@ block content
                     br
                     form(method="GET", action='/timer/')
                         button.col-sm-3.btn.btn-primary(type="submit") Reset
-                    br
+                    br      
         div
-            include partials/group.pug
-        div
-            
-    
-            
-                                        
+            include partials/group.pug                                    
         footer

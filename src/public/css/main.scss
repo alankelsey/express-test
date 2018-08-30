@@ -18,17 +18,14 @@ body {
   margin-bottom: 75px;
 }
 
-.results {
-  margin-left: 40%;
-  margin-top: -10%;
+.timerInfo {
+  // margin-right: 50%;
+  float: left;
+  width: 50%;
 }
 
 .results.p {
   font-size: 8em;
-}
-
-.results.li {
-list-style-type: none;
 }
 
 footer {

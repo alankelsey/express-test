@@ -11,6 +11,7 @@ export class MyGroup {
             // names: [ "Greg", "Dave", "Alan" ]
        //  };
         private names = [ "Alan", "Greg", "Dave" ];
+        // private names = [ "Alan" ];
         // this.groupInfo.forEach(() => console.log(item));
         // items.forEach((item, index, array) => console.log(item));
         // const herei = this.groupInfo;

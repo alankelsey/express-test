@@ -53,6 +53,7 @@ class MyTimer extends MyGroup {
 
         this.timerData.startTime = this.getTime();
         // this.nextName(this.nameList);
+        console.log("STARTTIME " + this.timerData.totals);
     }
 
     setStopTime() {
@@ -60,6 +61,7 @@ class MyTimer extends MyGroup {
         this.timerData.endTime = this.getTime();
         this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
         this.timerData.totals = this.setTotals(this.timerData.name, this.timerData.min, this.timerData.sec);
+        console.log("STOPTIME " + this.timerData.totals);
 
     }
 
@@ -73,12 +75,8 @@ class MyTimer extends MyGroup {
         const minSec = min + ":" + sec;
         const fullTotal = user + " " + minSec;
 
-
         this.resultsList.push(fullTotal);
-
-        // console.log(user + " " + min + ":" + sec);
-        // console.log(this.timerData.totals);
-
+        console.log("SETTOTAL " + this.timerData.totals);
         return  this.resultsList;
     }
 
@@ -99,6 +97,7 @@ class MyTimer extends MyGroup {
             this.timerData.name = this.nameList[inc];
             this.timerData.index = inc;
         }
+        console.log("NEXT USER " + this.timerData.totals);
     }
 
     private getTime() {
@@ -151,7 +150,11 @@ class MyTimer extends MyGroup {
 
     resetResults() {
 
+        console.log("RESET " + this.timerData.totals);
         this.timerData.totals = [];
+        // this.timerData.totals =  0;
+        this.resultsList = [];
+        console.log("RESET " + this.timerData.totals);
     }
 
 }

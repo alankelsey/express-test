@@ -1,6 +1,5 @@
-div(class="results")
-    h1 Results
-    if totals 
-        ul 
-            each total in totals
-                li= total
+h1 Results
+if totals 
+    ul(class="list-unstyled") 
+        each total in totals
+            li= total
