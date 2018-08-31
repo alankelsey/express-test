@@ -15,7 +15,7 @@ import { MyGroup } from "../controllers/group" ;
 
 class MyTimer extends MyGroup {
 
-
+    // failed consructor - feel like it timerData should be initialized here
     /*
     timerData: object;
     constructor() {
@@ -44,16 +44,9 @@ class MyTimer extends MyGroup {
         totals: {}
     };
 
-
-    // private nextName(listIn: object) {
-        // this.timerData.name = this.name;
-    // }
-
     setStartTime() {
 
         this.timerData.startTime = this.getTime();
-        // this.nextName(this.nameList);
-        console.log("STARTTIME " + this.timerData.totals);
     }
 
     setStopTime() {
@@ -61,8 +54,6 @@ class MyTimer extends MyGroup {
         this.timerData.endTime = this.getTime();
         this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
         this.timerData.totals = this.setTotals(this.timerData.name, this.timerData.min, this.timerData.sec);
-        console.log("STOPTIME " + this.timerData.totals);
-
     }
 
     setUser(inc: number) {
@@ -72,11 +63,12 @@ class MyTimer extends MyGroup {
 
     setTotals(user: string, min: number, sec: number) {
 
+        // min, sec, and name all to a single string -
         const minSec = min + ":" + sec;
         const fullTotal = user + " " + minSec;
 
         this.resultsList.push(fullTotal);
-        console.log("SETTOTAL " + this.timerData.totals);
+
         return  this.resultsList;
     }
 
@@ -97,7 +89,6 @@ class MyTimer extends MyGroup {
             this.timerData.name = this.nameList[inc];
             this.timerData.index = inc;
         }
-        console.log("NEXT USER " + this.timerData.totals);
     }
 
     private getTime() {
@@ -106,19 +97,21 @@ class MyTimer extends MyGroup {
     }
 
     returnTimerData() {
-
+        // possibly use app.locals.siteDate
         return this.timerData;
     }
 
+    // get's start/end time difference in ms
+    // formats to get from ms to mm and s.sssssss
     private elapsedTime(startedAt: number, stoppedAt: number) {
 
         const diff = stoppedAt - startedAt;
-        // const totalTime = this.formatMinSec(diff).seconds;
         this.timerData.min = this.formatMinSec(diff).minutes;
         this.timerData.sec = this.formatMinSec(diff).seconds;
 
     }
 
+    // converts ms to combined min sec
     private formatMinSec(ms: number) {
 
         const sec = (ms / 1000) % 60;
@@ -139,6 +132,7 @@ class MyTimer extends MyGroup {
         return results;
     }
 
+    // Clear times and user only
     resetTimer() {
 
         this.timerData.startTime = 0;
@@ -148,13 +142,12 @@ class MyTimer extends MyGroup {
         this.setUser(0);
     }
 
+    // clear result totals only
     resetResults() {
 
-        console.log("RESET " + this.timerData.totals);
         this.timerData.totals = [];
         // this.timerData.totals =  0;
         this.resultsList = [];
-        console.log("RESET " + this.timerData.totals);
     }
 
 }
@@ -181,7 +174,6 @@ export let startTimer = (req: Request, res: Response) => {
 
 export let stopTimer = (req: Request, res: Response) => {
 
-    // timer.setTotals(timer.returnTimerData().name, timer.returnTimerData().min, timer.returnTimerData().sec);
     timer.setStopTime();
     res.render("timer", timer.returnTimerData());
 };
@@ -191,5 +183,3 @@ export let next = (req: Request, res: Response) => {
     timer.nextUser(timer.returnTimerData().index);
     res.render("timer", timer.returnTimerData());
 };
-
-// export let t = timer;

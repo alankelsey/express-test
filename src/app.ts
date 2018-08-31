@@ -25,7 +25,7 @@ dotenv.config({ path: ".env" });
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
 import * as userController from "./controllers/user";
-import * as apiController from "./controllers/api";
+// import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 import * as timerController from "./controllers/timer";
 // import * as groupController from "./controllers/group";
@@ -92,12 +92,14 @@ app.use(
 );
 
 app.use(express.static("app/public"));
+
+// load json for username maintenance
 app.use(require("./routes/userFile"));
 
+// glabal app date for footer etc...
 app.locals.siteDate = new Date();
 app.locals.siteYear = new Date().getFullYear();
-// app.locals.startTime = 0;
-// app.locals.stopTime = 0;
+
 /**
  * Primary app routes.
  */
@@ -118,6 +120,8 @@ app.post("/account/profile", passportConfig.isAuthenticated, userController.post
 app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
+
+// custom routes start here
 app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
