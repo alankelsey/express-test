@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const group_1 = require("../controllers/group");
+const group_1 = require("./group");
 /**
  * GET /
  * Timer page.

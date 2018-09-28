@@ -33,6 +33,7 @@ const userController = __importStar(require("./controllers/user"));
 // import * as apiController from "./controllers/api";
 const contactController = __importStar(require("./controllers/contact"));
 const timerController = __importStar(require("./controllers/timer"));
+const pipeLineController = __importStar(require("./controllers/pipeLine"));
 // import * as groupController from "./controllers/group";
 // API keys and Passport configuration
 const passportConfig = __importStar(require("./config/passport"));
@@ -118,6 +119,7 @@ app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
 app.get("/timer/next/", timerController.next);
+app.get("/pipeline", pipeLineController.get);
 // app.get("/group", timerController.getGroup);
 /**
  * API examples routes.

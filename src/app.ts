@@ -28,6 +28,7 @@ import * as userController from "./controllers/user";
 // import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
 import * as timerController from "./controllers/timer";
+import * as pipeLineController from "./controllers/pipeLine";
 // import * as groupController from "./controllers/group";
 
 // API keys and Passport configuration
@@ -126,6 +127,7 @@ app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
 app.get("/timer/next/", timerController.next);
+app.get("/pipeline", pipeLineController.get);
 // app.get("/group", timerController.getGroup);
 
 /**

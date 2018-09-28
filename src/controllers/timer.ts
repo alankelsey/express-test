@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { WriteError } from "mongodb";
 import { default as User, UserModel, AuthToken } from "../models/User";
-import { each } from "../../node_modules/@types/async";
-import { MyGroup } from "../controllers/group" ;
+import { each } from "async";
+import { MyGroup } from "./group" ;
 
 /**
  * GET /

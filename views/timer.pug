@@ -1,46 +1,43 @@
 extends layout
 block content
-    html
-        head
-        body
-        div(class="timerInfo") 
-            ul(class="list-unstyled")
-                li #{name}
-                li Started at: #{startTime}
-                li Stopped at: #{endTime}
-                li Min:  #{min}
-                li Sec:  #{sec}
-            if startTime == 0
-                div
-                    form(method="POST", action='/timer/start/')
-                        input( type="hidden", name="start", value=startTime)
-                        input( type="hidden", name="stop", value=endTime)
-                        label(for="start timer")
-                        button.col-sm-3.btn.btn-primary(type="submit") Start
-                    br
-                    form(method="GET", action='/timer/')
-                        button.col-sm-3.btn.btn-primary(type="submit") Reset
-            else if endTime == 0
-                div
-                    form(method="POST", action='/timer/stop/')
-                        input( type="hidden",name="start", value=startTime)
-                        input( type="hidden", name="stop", value=endTime)
-                        label(for="start timer")
-                        button.col-sm-3.btn.btn-primary(type="submit", value=startTime) Stop
-                    br
-                    form(method="GET", action='/timer/')
-                        button.col-sm-3.btn.btn-primary(type="submit") Reset
-            else
-                div
-                    form(method="GET", action='/timer/next/')
-                        input( type="hidden", name="total", value=min + " : " + sec)
-                        label(for="next")
-                        button.col-sm-3.btn.btn-primary(type="submit") Next
-                    br
-                    form(method="GET", action='/timer/')
-                        button.col-sm-3.btn.btn-primary(type="submit") Reset
-                    br
-        div
-            include partials/group.pug
-            include partials/counter.pug
-        footer
+    div(class="timerInfo")
+        ul(class="list-unstyled")
+            li #{name}
+            li Started at: #{startTime}
+            li Stopped at: #{endTime}
+            li Min:  #{min}
+            li Sec:  #{sec}
+        if startTime == 0
+            div
+                form(method="POST", action='/timer/start/')
+                    input( type="hidden", name="start", value=startTime)
+                    input( type="hidden", name="stop", value=endTime)
+                    label(for="start timer")
+                    button.col-sm-3.btn.btn-primary(type="submit") Start
+                br
+                form(method="GET", action='/timer/')
+                    button.col-sm-3.btn.btn-primary(type="submit") Reset
+        else if endTime == 0
+            div
+                form(method="POST", action='/timer/stop/')
+                    input( type="hidden",name="start", value=startTime)
+                    input( type="hidden", name="stop", value=endTime)
+                    label(for="start timer")
+                    button.col-sm-3.btn.btn-primary(type="submit", value=startTime) Stop
+                br
+                form(method="GET", action='/timer/')
+                    button.col-sm-3.btn.btn-primary(type="submit") Reset
+        else
+            div
+                form(method="GET", action='/timer/next/')
+                    input( type="hidden", name="total", value=min + " : " + sec)
+                    label(for="next")
+                    button.col-sm-3.btn.btn-primary(type="submit") Next
+                br
+                form(method="GET", action='/timer/')
+                    button.col-sm-3.btn.btn-primary(type="submit") Reset
+                br
+    div
+        include partials/group.pug
+        include partials/counter.pug
+    footer
