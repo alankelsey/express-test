@@ -3,6 +3,8 @@ import { WriteError } from "mongodb";
 import { default as User, UserModel, AuthToken } from "../models/User";
 import { each } from "async";
 import { MyGroup } from "./group" ;
+import request from "request";
+import { SLACK_HOOK_URL } from "../util/secrets";
 
 /**
  * GET /
@@ -31,6 +33,7 @@ class MyTimer extends MyGroup {
     // vars
     private nameList = this.getNames();
     private resultsList: Array<string> = [];
+    private slackUrl = SLACK_HOOK_URL;
 
     // initialize timerdata
     private timerData = {
@@ -150,6 +153,38 @@ class MyTimer extends MyGroup {
         this.resultsList = [];
     }
 
+    // post a web hook/request to slack channel - sending the time totals
+    copyToSlack(data: string) {
+
+        const body = {
+            "channel": "#dev-team",
+            "username": "Standup_Times",
+            "text": data,
+            "icon_url": "https://pbs.twimg.com/profile_images/76277472/bender.jpg"
+        };
+
+        request({
+            url: "https://hooks.slack.com/services/" + this.slackUrl,
+            method: "POST",
+            json: true,   // <--Very important!!!
+            body: body,
+            headers: {
+                "content-type": "application/json",
+
+            }
+        }, function (error, response, body) {
+
+            if (error) {
+                console.log(error, error.stack);
+            } else {
+                console.log(response.statusCode);
+                console.log(response.statusMessage);
+                console.log(body);
+            }
+        });
+
+    }
+
 }
 
 const timer = new MyTimer;
@@ -182,4 +217,14 @@ export let next = (req: Request, res: Response) => {
 
     timer.nextUser(timer.returnTimerData().index);
     res.render("timer", timer.returnTimerData());
+};
+
+export let copy = (req: Request, res: Response) => {
+    // res.statusCode = 202;
+    const message = JSON.stringify(timer.returnTimerData().totals);
+    const notify = res.statusCode  + " Times sent to slack: " + message;
+
+    timer.copyToSlack(message);
+
+    res.send(notify);
 };

@@ -12,7 +12,8 @@ import mongoose from "mongoose";
 import passport from "passport";
 import expressValidator from "express-validator";
 import bluebird from "bluebird";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET, SLACK_HOOK_URL } from "./util/secrets";
+
 
 
 
@@ -100,6 +101,8 @@ app.use(require("./routes/userFile"));
 // glabal app date for footer etc...
 app.locals.siteDate = new Date();
 app.locals.siteYear = new Date().getFullYear();
+// for slack hooks
+app.locals.slackHookUrl = SLACK_HOOK_URL;
 
 /**
  * Primary app routes.
@@ -127,6 +130,7 @@ app.get("/timer", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
 app.get("/timer/next/", timerController.next);
+app.get("/timer/copy/", timerController.copy);
 app.get("/pipeline", pipeLineController.get);
 // app.get("/group", timerController.getGroup);
 
