@@ -12,6 +12,7 @@ pids
 logs
 results
 tmp
+debug.log
 
 # Build
 public/css/main.css
@@ -38,4 +39,4 @@ Thumbs.db
 dist/**/*
 
 # logs
-debug.log
+*.log
