@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { WriteError } from "mongodb";
-import { default as User, UserModel, AuthToken } from "../models/User";
-import { each } from "async";
 import { MyGroup } from "./group" ;
-import request from "request";
+import httpReq from "request";
 import { SLACK_HOOK_URL } from "../util/secrets";
+// import { WriteError } from "mongodb";
+// import { default as User, UserModel, AuthToken } from "../models/User";
+// import { each } from "async";
+
 
 /**
  * GET /
@@ -163,7 +164,7 @@ class MyTimer extends MyGroup {
             "icon_url": "https://pbs.twimg.com/profile_images/76277472/bender.jpg"
         };
 
-        request({
+        httpReq({
             url: "https://hooks.slack.com/services/" + this.slackUrl,
             method: "POST",
             json: true,   // <--Very important!!!
@@ -172,13 +173,13 @@ class MyTimer extends MyGroup {
                 "content-type": "application/json",
 
             }
-        }, function (error, response, body) {
+        }, function (err, resp, body) {
 
-            if (error) {
-                console.log(error, error.stack);
+            if (err) {
+                console.log(err, err.stack);
             } else {
-                console.log(response.statusCode);
-                console.log(response.statusMessage);
+                console.log(resp.statusCode);
+                console.log(resp.statusMessage);
                 console.log(body);
             }
         });
@@ -195,7 +196,9 @@ export let getGroup = (req: Request, res: Response) => {
 };
 
 export let getTimer = (req: Request, res: Response) => {
-
+    if (req.params.debug) {
+        req.app.locals.debugOn = true;
+    }
     timer.resetTimer();
     timer.resetResults();
     res.render("timer", timer.returnTimerData());
