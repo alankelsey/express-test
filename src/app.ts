@@ -126,7 +126,7 @@ app.post("/account/delete", passportConfig.isAuthenticated, userController.postD
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 // custom routes start here
-app.get("/timer", timerController.getTimer);
+app.get("/timer/", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
 app.get("/timer/next/", timerController.next);

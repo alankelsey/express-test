@@ -1,2 +1,7 @@
-div(class="copyTo")= html
- a(href="/timer/copy" target="_blank") copy
+h3 Results
+if totals 
+    ul(class="list-unstyled") 
+        each total in totals
+            li= total
+br
+a(href="/timer/copy" target="_blank") Send to Slack

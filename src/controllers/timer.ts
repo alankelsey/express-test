@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { WriteError } from "mongodb";
-import { default as User, UserModel, AuthToken } from "../models/User";
-import { each } from "async";
 import { MyGroup } from "./group" ;
-import request from "request";
+import httpReq from "request";
 import { SLACK_HOOK_URL } from "../util/secrets";
+
+
 
 /**
  * GET /
@@ -16,19 +15,6 @@ import { SLACK_HOOK_URL } from "../util/secrets";
  //  and combines it all together for running results
 
 class MyTimer extends MyGroup {
-
-    // failed consructor - feel like it timerData should be initialized here
-    /*
-    timerData: object;
-    constructor() {
-        this.timerData = {
-            startTime: 0,
-            endTime: 0,
-            min: 0,
-            sec: 0
-        }
-    }
-    */
 
     // vars
     private nameList = this.getNames();
@@ -50,18 +36,26 @@ class MyTimer extends MyGroup {
     setStartTime() {
 
         this.timerData.startTime = this.getTime();
+        // console.log("Set Start Time");
+        // console.log(this.timerData);
     }
 
     setStopTime() {
-
-        this.timerData.endTime = this.getTime();
-        this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
-        this.timerData.totals = this.setTotals(this.timerData.name, this.timerData.min, this.timerData.sec);
+        if (this.timerData.endTime == 0) {
+            this.timerData.endTime = this.getTime();
+            this.elapsedTime(this.timerData.startTime, this.timerData.endTime);
+            this.timerData.totals = this.setTotals(this.timerData.name, this.timerData.min, this.timerData.sec);
+            // console.log("Set Stop Time");
+            // console.log(this.timerData);
+        }
     }
 
     setUser(inc: number) {
 
         this.timerData.name = this.nameList[inc];
+        this.timerData.index = inc;
+        // console.log("Set User");
+        // console.log(this.timerData);
     }
 
     setTotals(user: string, min: number, sec: number) {
@@ -71,7 +65,8 @@ class MyTimer extends MyGroup {
         const fullTotal = user + " " + minSec;
 
         this.resultsList.push(fullTotal);
-
+        // console.log("Set Totals");
+        // console.log(this.timerData);
         return  this.resultsList;
     }
 
@@ -81,25 +76,33 @@ class MyTimer extends MyGroup {
         this.resetTimer();
         // get length for the names array : minus one to offset index vs length
         const endIng = this.nameList.length - 1;
-
+        // console.log("Get Next User");
         // check if array length vs current position in user list
         const inc = cnt + 1;
 
         if ( inc > endIng ) {
             this.timerData.name = this.nameList[0];
             this.timerData.index = 0;
+            // console.log(this.timerData.index + " " + this.timerData.name);
         } else {
             this.timerData.name = this.nameList[inc];
             this.timerData.index = inc;
+            // console.log(this.timerData.index + " " + this.timerData.name);
+
         }
+
+        // console.log(this.timerData);
     }
 
     private getTime() {
-
+        // console.log("Get Time");
+        // console.log(this.timerData);
         return Date.now();
     }
 
     returnTimerData() {
+        // console.log("Return Timer Data");
+        // console.log(this.timerData);
         // possibly use app.locals.siteDate
         return this.timerData;
     }
@@ -111,6 +114,8 @@ class MyTimer extends MyGroup {
         const diff = stoppedAt - startedAt;
         this.timerData.min = this.formatMinSec(diff).minutes;
         this.timerData.sec = this.formatMinSec(diff).seconds;
+        // console.log("Get Elapsed Time");
+        // console.log(this.timerData);
 
     }
 
@@ -131,8 +136,10 @@ class MyTimer extends MyGroup {
 
             results.minutes = min;
         }
-
+        // console.log("Formatting Time");
+        // console.log(this.timerData);
         return results;
+
     }
 
     // Clear times and user only
@@ -142,6 +149,13 @@ class MyTimer extends MyGroup {
         this.timerData.endTime = 0;
         this.timerData.min = 0;
         this.timerData.sec = 0;
+        // this.setUser(0);
+        // console.log("Reset Timer");
+        // console.log(this.timerData);
+    }
+
+    // reset name needs to be called seperate of resettimer
+    resetName() {
         this.setUser(0);
     }
 
@@ -151,6 +165,8 @@ class MyTimer extends MyGroup {
         this.timerData.totals = [];
         // this.timerData.totals =  0;
         this.resultsList = [];
+        // console.log("Reset Results");
+        // console.log(this.timerData);
     }
 
     // post a web hook/request to slack channel - sending the time totals
@@ -162,8 +178,10 @@ class MyTimer extends MyGroup {
             "text": data,
             "icon_url": "https://pbs.twimg.com/profile_images/76277472/bender.jpg"
         };
+        // console.log("Send to Slack");
+        // console.log(this.timerData);
 
-        request({
+        httpReq({
             url: "https://hooks.slack.com/services/" + this.slackUrl,
             method: "POST",
             json: true,   // <--Very important!!!
@@ -172,16 +190,17 @@ class MyTimer extends MyGroup {
                 "content-type": "application/json",
 
             }
-        }, function (error, response, body) {
+        }, function (err, resp, body) {
 
-            if (error) {
-                console.log(error, error.stack);
+            if (err) {
+                // console.log(err, err.stack);
             } else {
-                console.log(response.statusCode);
-                console.log(response.statusMessage);
-                console.log(body);
+                // console.log(resp.statusCode);
+                // console.log(resp.statusMessage);
+                // console.log(body);
             }
         });
+
 
     }
 
@@ -190,41 +209,55 @@ class MyTimer extends MyGroup {
 const timer = new MyTimer;
 
 export let getGroup = (req: Request, res: Response) => {
-
+    // console.log("Reset Results");
+    // console.log(this.timerData);
     res.render("timer", timer.returnTimerData());
 };
 
 export let getTimer = (req: Request, res: Response) => {
+    // // console.log(req.params.debug);
+    // if (req.params.debug) {
+     //   // console.log("debug on");
+     //   req.app.locals.debugOn = true;
+    // }
+    // this.writeToLog("Called Get timer");
 
     timer.resetTimer();
+    timer.resetName();
     timer.resetResults();
+    // console.log("Get Timer");
+    // // console.log(timer.returnTimerData());
     res.render("timer", timer.returnTimerData());
 };
 
 export let startTimer = (req: Request, res: Response) => {
-
+    // console.log("Start Timer");
     timer.setStartTime();
+    // console.log(this.timerData);
     res.render("timer", timer.returnTimerData());
 };
 
 export let stopTimer = (req: Request, res: Response) => {
-
+    // console.log("Stopped Timer");
     timer.setStopTime();
+    // console.log(this.timerData);
     res.render("timer", timer.returnTimerData());
 };
 
 export let next = (req: Request, res: Response) => {
-
+    // console.log("next Timer");
     timer.nextUser(timer.returnTimerData().index);
+    // console.log(this.timerData);
     res.render("timer", timer.returnTimerData());
 };
 
 export let copy = (req: Request, res: Response) => {
     // res.statusCode = 202;
+    // console.log("Copy Timer");
     const message = JSON.stringify(timer.returnTimerData().totals);
     const notify = res.statusCode  + " Times sent to slack: " + message;
 
     timer.copyToSlack(message);
-
+    // console.log(this.timerData);
     res.send(notify);
 };
