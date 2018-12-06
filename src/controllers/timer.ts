@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { MyGroup } from "./group" ;
 import httpReq from "request";
 import { SLACK_HOOK_URL } from "../util/secrets";
-// import { writeToLog } from "./debugger";
 
 
 
@@ -31,8 +30,7 @@ class MyTimer extends MyGroup {
         name: this.nameList[0],
         index: 0,
         html: "",
-        totals: {},
-        currentName: ""
+        totals: {}
     };
 
     setStartTime() {
@@ -78,18 +76,18 @@ class MyTimer extends MyGroup {
         this.resetTimer();
         // get length for the names array : minus one to offset index vs length
         const endIng = this.nameList.length - 1;
-        console.log("Get Next User");
+        // console.log("Get Next User");
         // check if array length vs current position in user list
         const inc = cnt + 1;
 
         if ( inc > endIng ) {
             this.timerData.name = this.nameList[0];
             this.timerData.index = 0;
-            console.log(this.timerData.index + " " + this.timerData.name);
+            // console.log(this.timerData.index + " " + this.timerData.name);
         } else {
             this.timerData.name = this.nameList[inc];
             this.timerData.index = inc;
-            console.log(this.timerData.index + " " + this.timerData.name);
+            // console.log(this.timerData.index + " " + this.timerData.name);
 
         }
 
