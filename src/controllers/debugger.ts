@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-function writeToLog(txt: string) {
+export function writeToLog(txt: string) {
 
     if (this.Request.app.locals.debugOn) {
 
