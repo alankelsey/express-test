@@ -70,6 +70,10 @@ class MyTimer extends MyGroup {
         return  this.resultsList;
     }
 
+    skip(nameToSkip: string) {
+        Object.defineProperty(this.timerData.totals, nameToSkip, {value: 0});
+
+    }
     // This resets the timer and group order
     nextUser(cnt: number) {
 
@@ -165,7 +169,7 @@ class MyTimer extends MyGroup {
     // clear result totals only
     resetResults() {
 
-        this.timerData.totals = [];
+        this.timerData.totals = {};
         // this.timerData.totals =  0;
         this.resultsList = [];
         // console.log("Reset Results");
@@ -242,6 +246,10 @@ export let stopTimer = (req: Request, res: Response) => {
 };
 
 export let next = (req: Request, res: Response) => {
+    if (req.query.skip) {
+        // console.log(req.query.skip);
+        timer.skip(req.query.skip);
+    }
     // console.log("next Timer");
     timer.nextUser(timer.returnTimerData().index);
     // console.log(this.timerData);

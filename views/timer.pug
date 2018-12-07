@@ -11,6 +11,12 @@ block content
                     label(for="start timer")
                     button.btn-primary.btn-lg(type="submit") Start
                 br
+                if name!== "Open"
+                    form(method="GET", action='/timer/next/')
+                        input( type="hidden",name="skip", value=name)
+                        label(for="skip")
+                        button.btn-primary.btn-lg(type="submit" ) Skip
+                    br
                 form(method="GET", action='/timer/')
                     button.btn-danger.btn-sm(type="submit") Reset
         else if endTime == 0

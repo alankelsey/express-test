@@ -61,6 +61,9 @@ class MyTimer extends group_1.MyGroup {
         // console.log(this.timerData);
         return this.resultsList;
     }
+    skip(nameToSkip) {
+        Object.defineProperty(this.timerData.totals, nameToSkip, { value: 0 });
+    }
     // This resets the timer and group order
     nextUser(cnt) {
         this.resetTimer();
@@ -138,7 +141,7 @@ class MyTimer extends group_1.MyGroup {
     }
     // clear result totals only
     resetResults() {
-        this.timerData.totals = [];
+        this.timerData.totals = {};
         // this.timerData.totals =  0;
         this.resultsList = [];
         // console.log("Reset Results");
@@ -147,7 +150,7 @@ class MyTimer extends group_1.MyGroup {
     // post a web hook/request to slack channel - sending the time totals
     copyToSlack(data) {
         const body = {
-            "channel": "#apitesting",
+            "channel": "#dev-team",
             "username": "Standup_Times",
             "text": data,
             "icon_url": "https://pbs.twimg.com/profile_images/76277472/bender.jpg"
@@ -201,6 +204,10 @@ exports.stopTimer = (req, res) => {
     res.render("timer", timer.returnTimerData());
 };
 exports.next = (req, res) => {
+    if (req.query.skip) {
+        // console.log(req.query.skip);
+        timer.skip(req.query.skip);
+    }
     // console.log("next Timer");
     timer.nextUser(timer.returnTimerData().index);
     // console.log(this.timerData);
