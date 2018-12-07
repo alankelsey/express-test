@@ -107,7 +107,7 @@ class MyTimer extends group_1.MyGroup {
     }
     // converts ms to combined min sec
     formatMinSec(ms) {
-        const sec = (ms / 1000) % 60;
+        const sec = Math.floor((ms / 1000) % 60);
         // const secCalc = (ms / 1000) % 60;
         const min = ((ms / 1000) - ((ms / 1000) % 60)) / 60;
         // const sec = Math.trunc(secCalc * Math.pow(10, 3)) / 100;
