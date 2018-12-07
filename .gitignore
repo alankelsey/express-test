@@ -37,6 +37,9 @@ Thumbs.db
 
 # Ignore built ts files
 dist/**/*
+dist/*/*
+dist/*
+dist/
 
 # logs
 *.log

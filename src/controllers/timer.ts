@@ -17,7 +17,7 @@ import { SLACK_HOOK_URL } from "../util/secrets";
 class MyTimer extends MyGroup {
 
     // vars
-    private nameList = this.getNames();
+    private nameList: Array<string> = [];
     private resultsList: Array<string> = [];
     private slackUrl = SLACK_HOOK_URL;
 
@@ -81,14 +81,14 @@ class MyTimer extends MyGroup {
         const inc = cnt + 1;
 
         if ( inc > endIng ) {
-            this.timerData.name = this.nameList[0];
-            this.timerData.index = 0;
+            // this.timerData.name = this.nameList[0];
+            this.timerData.name = "Open";
+            // this.timerData.index = 0;
             // console.log(this.timerData.index + " " + this.timerData.name);
         } else {
             this.timerData.name = this.nameList[inc];
             this.timerData.index = inc;
             // console.log(this.timerData.index + " " + this.timerData.name);
-
         }
 
         // console.log(this.timerData);
@@ -156,6 +156,9 @@ class MyTimer extends MyGroup {
 
     // reset name needs to be called seperate of resettimer
     resetName() {
+        this.nameList = this.getNames();
+        // this.nameList.push("Open");
+        // console.log(this.nameList);
         this.setUser(0);
     }
 
@@ -215,18 +218,12 @@ export let getGroup = (req: Request, res: Response) => {
 };
 
 export let getTimer = (req: Request, res: Response) => {
-    // // console.log(req.params.debug);
-    // if (req.params.debug) {
-     //   // console.log("debug on");
-     //   req.app.locals.debugOn = true;
-    // }
-    // this.writeToLog("Called Get timer");
 
     timer.resetTimer();
     timer.resetName();
     timer.resetResults();
     // console.log("Get Timer");
-    // // console.log(timer.returnTimerData());
+    // console.log(timer.returnTimerData());
     res.render("timer", timer.returnTimerData());
 };
 
