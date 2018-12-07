@@ -94,6 +94,8 @@ app.use(require("./routes/userFile"));
 // glabal app date for footer etc...
 app.locals.siteDate = new Date();
 app.locals.siteYear = new Date().getFullYear();
+// for slack hooks
+app.locals.slackHookUrl = secrets_1.SLACK_HOOK_URL;
 /**
  * Primary app routes.
  */
@@ -115,10 +117,11 @@ app.post("/account/password", passportConfig.isAuthenticated, userController.pos
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
 // custom routes start here
-app.get("/timer", timerController.getTimer);
+app.get("/timer/", timerController.getTimer);
 app.post("/timer/start/", timerController.startTimer);
 app.post("/timer/stop/", timerController.stopTimer);
 app.get("/timer/next/", timerController.next);
+app.get("/timer/copy/", timerController.copy);
 app.get("/pipeline", pipeLineController.get);
 // app.get("/group", timerController.getGroup);
 /**
