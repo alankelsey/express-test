@@ -147,7 +147,7 @@ class MyTimer extends group_1.MyGroup {
     // post a web hook/request to slack channel - sending the time totals
     copyToSlack(data) {
         const body = {
-            "channel": "#dev-team",
+            "channel": "#apitesting",
             "username": "Standup_Times",
             "text": data,
             "icon_url": "https://pbs.twimg.com/profile_images/76277472/bender.jpg"
