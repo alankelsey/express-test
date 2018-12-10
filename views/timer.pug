@@ -23,8 +23,9 @@ block content
                 form(method="POST", action='/timer/stop/')
                     input( type="hidden",name="start", value=startTime)
                     input( type="hidden", name="stop", value=endTime)
-                    label(for="start timer")
+                    label(for="start timer" )
                     button.btn-primary.btn-lg(type="submit", value="startTime" ) Stop
+                        font(class="fa fa-circle-o-notch fa-spin" style="float:left;")
                 br
                 form(method="GET", action='/timer/')
                     button.btn-danger.btn-sm(type="submit") Reset
@@ -47,6 +48,6 @@ block content
                     form(method="GET", action='/timer/')
                         button.btn-danger.btn-sm(type="submit" ) Reset
                     br
-    div
+    div(class="results")
         include partials/counter.pug
     footer

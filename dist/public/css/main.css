@@ -8911,8 +8911,11 @@ body {
   float: left;
   width: 50%; }
 
-.results.p {
-  font-size: 8em; }
+.results {
+  font-size: 8em;
+  padding: 2px;
+  font-family: Helvetica, Arial;
+  border: solid black 2px; }
 
 footer {
   position: absolute;

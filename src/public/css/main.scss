@@ -18,14 +18,22 @@ body {
   margin-bottom: 75px;
 }
 
+#results {
+
+  
+}
+
 .timerInfo {
   // margin-right: 50%;
   float: left;
   width: 50%;
 }
 
-.results.p {
+.results {
   font-size: 8em;
+  padding: 2px;
+  font-family: Helvetica, Arial;
+  border: solid black 2px;
 }
 
 footer {
