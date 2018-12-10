@@ -8912,10 +8912,7 @@ body {
   width: 50%; }
 
 .results {
-  font-size: 8em;
-  padding: 2px;
-  font-family: Helvetica, Arial;
-  border: solid black 2px; }
+  font-family: Helvetica, Arial; }
 
 footer {
   position: absolute;
