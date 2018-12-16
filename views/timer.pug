@@ -39,12 +39,6 @@ block content
                         button.btn-danger.btn-sm(type="submit" ) Reset
                 br
         else
-                div
-                    form(method="GET", action='/timer/next/')
-                        input( type="hidden", name="total", value=min + " : " + sec)
-                        label(for="next")
-                        button.btn-primary.btn-lg(type="submit" id="next_button") Next
-                    br
                     form(method="GET", action='/timer/')
                         button.btn-danger.btn-sm(type="submit" ) Reset
                     br
