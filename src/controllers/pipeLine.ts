@@ -44,8 +44,8 @@ class MyPipeLine {
         const releaseUrl = "https://velma.aha.io/api/v1/releases/6550652763433854458/features/";
         // Up to 300 requests are allowed per minute, and up to 20 requests per second.
         // https://www.aha.io/api?_ga=2.135691761.1750409197.1537505826-546858760.1536327392
-        const authInfo = { "auth" : { "user" : "akelsey@velma.com", "pass" : "zhe2LBbMOCtL", "sendImmediately" : true } };
-
+        // needs auth info
+        const authInfo = { "auth" : { "user" : "username", "pass" : "pass", "sendImmediately" : true } };
         request.get( releaseUrl, authInfo, function (error, response, body) {
             console.log("settingPipeLine");
             this.pipeLineData = body.toJSON;
