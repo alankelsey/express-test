@@ -189,7 +189,8 @@ exports.getTimer = (req, res) => {
     timer.resetResults();
     // console.log("Get Timer");
     // console.log(timer.returnTimerData());
-    res.render("timer", timer.returnTimerData());
+    // res.send({title: "Timer"});
+    res.render("timer", timer.returnTimerData()); // added title?
 };
 exports.startTimer = (req, res) => {
     // console.log("Start Timer");
@@ -200,7 +201,10 @@ exports.startTimer = (req, res) => {
 exports.stopTimer = (req, res) => {
     // console.log("Stopped Timer");
     timer.setStopTime();
-    // console.log(this.timerData);
+    if (timer.returnTimerData().name != "Open") {
+        timer.nextUser(timer.returnTimerData().index);
+    }
+    console.log(timer.returnTimerData());
     res.render("timer", timer.returnTimerData());
 };
 exports.next = (req, res) => {
