@@ -1,7 +1,6 @@
 # TypeScript Node Starter
 
-Based on:
-https://david-dm.org/Microsoft/TypeScript-Node-Starter.svg)](https://david-dm.org/Microsoft/TypeScript-Node-Starter) 
+A majority of this quick start's content was inspired or adapted from Sahat's excellent [Hackathon Starter project](https://github.com/sahat/hackathon-starter) and (https://david-dm.org/Microsoft/TypeScript-Node-Starter) 
 
 # Pre-reqs
 To build and run this app locally you will need a few things:
@@ -522,5 +521,3 @@ In that file you'll find two sections:
 | typescript                      | JavaScript compiler/type checker that boosts JavaScript productivity  |
 
 To install or update these dependencies you can use `npm install` or `npm update`.
-
-A majority of this quick start's content was inspired or adapted from Sahat's excellent [Hackathon Starter project](https://github.com/sahat/hackathon-starter).
