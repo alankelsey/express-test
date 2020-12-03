@@ -69,7 +69,7 @@ const line = new MyPipeLine;
 
 
 export let get = (req: Request, res: Response) => {
-    // const authInfo = { "auth" : { "user" : "akelsey@velma.com", "pass" : "zhe2LBbMOCtL", "sendImmediately" : true } };
+    // const authInfo = { "auth" : { "user" : "email", "pass" : "pass", "sendImmediately" : true } };
     // const data = restReq({"https://velma.aha.io/api/v1/releases/6550652763433854458/features/", authInfo});
 
 
