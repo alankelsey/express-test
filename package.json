@@ -92,7 +92,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "request-promise-native": "^1.0.5",
-    "shelljs": "^0.8.1",
+    "shelljs": "^0.8.5",
     "supertest": "^3.0.0",
     "ts-jest": "^22.0.4",
     "ts-node": "^5.0.0",
